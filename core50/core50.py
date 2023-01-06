@@ -49,16 +49,20 @@ class Core50(tfds.core.GeneratorBasedBuilder):
     # TODO(core50): Downloads the data and defines the splits
     # path = dl_manager.download_and_extract('https://todo-data-url')
     archive_path = dl_manager.manual_dir / 'core50_128x128.zip'
-    extraced_path = dl_manager.extract(archive_path)
+    extracted_path = dl_manager.extract(archive_path)
     # TODO(core50): Returns the Dict[split names, Iterator[Key, Example]]
     return {
-        'train': self._generate_examples(extraced_path / 'core50_128x128'),
+        'train': self._generate_examples(extracted_path / 'core50_128x128', 'train'),
+        'test': self._generate_examples(extracted_path / 'core50_128x128', 'test')
     }
 
-  def _generate_examples(self, path):
+  def _generate_examples(self, path, mode='train'):
     """Yields examples."""
     # TODO(core50): Yields (key, example) tuples from the dataset
-    domain = ['s'+str(i) for i in range(1, 11)]
+    if mode == 'train':
+      domain = ['s1', 's2', 's4', 's5', 's6', 's8', 's9', 's11']
+    elif mode == 'test':
+      domain = ['s3', 's7', 's10']
     label = ['o'+str(i) for i in range(1, 51)]
     for d in domain:
       for l in label:
