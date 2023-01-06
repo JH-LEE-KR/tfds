@@ -1,13 +1,13 @@
-"""core50 dataset."""
+"""core50_s8 dataset."""
 
 import tensorflow_datasets.public_api as tfds
-from tensorflow_datasets.core50 import core50
+from tensorflow_datasets.core50.core50_s8 import core50_s8
 
 
-class Core50Test(tfds.testing.DatasetBuilderTestCase):
-  """Tests for core50 dataset."""
-  # TODO(core50):
-  DATASET_CLASS = core50.Core50
+class Core50S8Test(tfds.testing.DatasetBuilderTestCase):
+  """Tests for core50_s8 dataset."""
+  # TODO(core50_s8):
+  DATASET_CLASS = core50_s8.Core50S8
   SPLITS = {
       'train': 3,  # Number of fake train example
       'test': 1,  # Number of fake test example

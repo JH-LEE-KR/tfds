@@ -1,8 +1,8 @@
-"""core50 dataset."""
+"""core50_s9 dataset."""
 
 import tensorflow_datasets.public_api as tfds
 
-# TODO(core50): Markdown description  that will appear on the catalog page.
+# TODO(core50_s9): Markdown description  that will appear on the catalog page.
 _DESCRIPTION = """
 Description is **formatted** as markdown.
 
@@ -10,13 +10,13 @@ It should also contain any processing which has been applied (if any),
 (e.g. corrupted example skipped, images cropped,...):
 """
 
-# TODO(core50): BibTeX citation
+# TODO(core50_s9): BibTeX citation
 _CITATION = """
 """
 
 
-class Core50(tfds.core.GeneratorBasedBuilder):
-  """DatasetBuilder for core50 dataset."""
+class Core50S9(tfds.core.GeneratorBasedBuilder):
+  """DatasetBuilder for core50_s9 dataset."""
   MANUAL_DOWNLOAD_INSTRUCTIONS = """
   core50_128x128.zip files should be located at /home/jaeho/tensorflow_datasets/downloads/manual
   """
@@ -27,7 +27,7 @@ class Core50(tfds.core.GeneratorBasedBuilder):
 
   def _info(self) -> tfds.core.DatasetInfo:
     """Returns the dataset metadata."""
-    # TODO(core50): Specifies the tfds.core.DatasetInfo object
+    # TODO(core50_s9): Specifies the tfds.core.DatasetInfo object
     return tfds.core.DatasetInfo(
         builder=self,
         description=_DESCRIPTION,
@@ -46,31 +46,26 @@ class Core50(tfds.core.GeneratorBasedBuilder):
 
   def _split_generators(self, dl_manager: tfds.download.DownloadManager):
     """Returns SplitGenerators."""
-    # TODO(core50): Downloads the data and defines the splits
+    # TODO(core50_s9): Downloads the data and defines the splits
     # path = dl_manager.download_and_extract('https://todo-data-url')
     archive_path = dl_manager.manual_dir / 'core50_128x128.zip'
     extracted_path = dl_manager.extract(archive_path)
-    # TODO(core50): Returns the Dict[split names, Iterator[Key, Example]]
+
+    # TODO(core50_s9): Returns the Dict[split names, Iterator[Key, Example]]
     return {
-        'train': self._generate_examples(extracted_path / 'core50_128x128', 'train'),
-        'test': self._generate_examples(extracted_path / 'core50_128x128', 'test')
+        'train': self._generate_examples(extracted_path / 'core50_128x128/s9'),
     }
 
-  def _generate_examples(self, path, mode='train'):
+  def _generate_examples(self, path):
     """Yields examples."""
-    # TODO(core50): Yields (key, example) tuples from the dataset
-    if mode == 'train':
-      domain = ['s1', 's2', 's4', 's5', 's6', 's8', 's9', 's11']
-    elif mode == 'test':
-      domain = ['s3', 's7', 's10']
+    # TODO(core50_s9): Yields (key, example) tuples from the dataset
     label = ['o'+str(i) for i in range(1, 51)]
-    for d in domain:
-      for l in label:
-        p = path / d / l
-        for f in p.glob('*.png'):
-          import random
-          img_id = random.getrandbits(512)
-          yield img_id, {
-            'image': f,
-            'label': l
-          }
+    for l in label:
+      p = path / l
+      for f in p.glob('*.png'):
+        import random
+        img_id = random.getrandbits(512)
+        yield img_id, {
+          'image': f,
+          'label': l
+        }

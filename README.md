@@ -8,6 +8,10 @@ This repository contains <a href="https://www.tensorflow.org/datasets/add_datase
 
 ## Usage
 ```
-cd <core50 or not_mnist>
+cd not_mnist
+tfds build
+```
+```
+cd core50/core50_<session id or test>
 tfds build
 ```
